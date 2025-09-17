@@ -1,3 +1,4 @@
+Tugas 2
 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 Pertama, membuat sebuah proyek Django baru dengan menjalankan perintah django-admin startproject football_shop . lalu menjalankan server.
 Kedua, membuat aplikasi dengan nama main pada proyek tersebut dengan menjalankan perintah python manage.py startapp main. Direktori main akan berisi struktur awal untuk aplikasi Django. Lalu, mendaftarkan aplikasi main ke dalam proyek dengan cara menambahkan 'main' pada INSTALLED_APPS.
@@ -28,3 +29,34 @@ Karena Django memiliki struktur yang jelas, memiliki banyak fitur bawaan yang su
 
 6. Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
 Tidak ada
+
+Tugas 3
+1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+Data delivery diperlukan dalam pengimplementasian sebuah platform untuk memindahkan dan mendistribusikan data secara efisien, serta memungkinkan analisis data yang akurat sebab dalam mengembangkan suatu platform, ada saat di mana kita perlu mengirimkan data dari satu stack ke stack lainnya.
+
+2. Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+Menurut saya, JSON lebih sesuai untuk API web modern. JSON lebih populer dibandingkan XML karena JSON lebih mudah dibaca dan dimengerti di mana setiap elemennya mendeskripsikan dirinya sendiri atau self describing. Selain itu, meskipun sintaks JSON berasal dari objek JavaScript, JSON sebenarnya adalah format text.
+
+3. Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+Method is_valid() pada form Django berfungsi untuk memvalidasi data formulir sehingga mencegah kesalahan data dan menjaga keamanan dalam aplikasi web.
+
+4. Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+csrf_token adalah token unik yang dibuat server untuk setiap sesi pengguna dan disertakan dalam formulir, lalu server akan memverifikasi token tersebut saat terdapat request untuk memastikan request tersebut berasal dari pengguna yang sah. csrf_token dibutuhkan saat membuat form di Django untuk melindungi dari serangan CSRF, yaitu serangan keamanan yang memanfaatkan authenticated cookie korban untuk melakukan aksi tidak sah dari situs lain. Jika kita tidak menambahkan csrf_token pada form Django, Django akan menolak request, tetapi jika proteksi csrf juga dinonaktifkan, Django dapat menerima request tanpa mengecek token. Hal ini dapat dimanfaatkan oleh penyerang dengan cara mengirim form tidak sah menggunakan cookie korban.
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+Pertama, membuat suatu skeleton sebagai kerangka views.
+Kedua, membuat form untuk menginput dan menampilkan data Football Shop pada aplikasi yaitu dengan menambahkan file forms.py pada folder main. Kemudian, menambahkan file views.py pada folder main dan menambahkan fungsi show_main(), create_product(), dan show_product(). Lalu, menambahkan path url pada urls.py.
+Ketiga, menambahkan tombol "Add" yang akan redirect ke halaman form. Lalu, menambahkan file create_product.html yang menampilkan halaman form input dan file product_detail.html yang menampilkan detail dari suatu produk.
+Keempat, mengembalikan data dalam bentuk XML yaitu dengan menambahkan fungsi show_xml pada views.py lalu menambahkan path url pada urls.py.
+Kelima, mengembalikan data dalam bentuk JSON yaitu dengan menambahkan fungsi show_json pada views.py lalu menambahkan path url pada urls.py.
+Keenam, mengembalikan data berdasarkan id dalam bentuk XML yaitu dengan menambahkan fungsi show_xml_by_id pada views.py lalu menambahkan path url pada urls.py.
+Ketujuh, mengembalikan data berdasarkan id dalam bentuk JSON yaitu dengan menambahkan fungsi show_json_by_id pada views.py lalu menambahkan path url pada urls.py.
+
+6. Apakah ada feedback untuk asdos di tutorial 2 yang sudah kalian kerjakan?
+Tidak ada
+
+Screenshot Postman:
+![bentuk XML](images/show_xml.png)
+![bentuk JSON](images/show_json.png)
+![bentuk XML berdasarkan ID](images/show_xml_by_id.png)
+![bentuk JSON berdasarkan ID](images/show_json_by_id.png)
