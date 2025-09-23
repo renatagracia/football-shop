@@ -60,3 +60,32 @@ Screenshot Postman:
 ![bentuk JSON](images/show_json.png)
 ![bentuk XML berdasarkan ID](images/show_xml_by_id.png)
 ![bentuk JSON berdasarkan ID](images/show_json_by_id.png)
+
+Tugas 4
+1. Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
+Django AuthenticationForm adalah form bawaan dari framework Django yang digunakan untuk proses login user dengan memastikan bahwa username dan password yang dimasukkan sesuai dengan data yang tersimpan di database.
+Kelebihannya adalah memiliki fitur autentikasi lengkap, dirancang dengan fitur keamanan yang kuat, dapat disesuaikan untuk kebutuhan spesifik proyek, dan menyediakan kerangka kerja yang sudah siap pakai untuk menangani proses login dan register.
+Kekurangannya adalah terbatas pada field bawaan yaitu username dan password saja sehingga jika perlu login dengan field custom, harus membuat subclass sendiri.
+
+2. Apa perbedaan antara autentikasi dan otorisasi? Bagaimana Django mengimplementasikan kedua konsep tersebut?
+Autentikasi memverifikasi identitas user melalui password, sidik jari, atau biometrik lainnya, sedangkan otorisasi menentukan hak akses di mana otorisasi memberikan atau menolak akses ke sumber daya atau fungsi tertentu berdasarkan permission dan peran user yang terautentikasi.
+Autentikasi ditangani oleh modul django.contrib.auth (fungsi authenticate(), login(), logout(), backends).
+Otorisasi ditangani oleh modul django.contrib.auth lewat sistem permissions, groups, dan decorator seperti @login_required atau @permission_required.
+
+3. Apa saja kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?
+Kelebihan session yaitu lebih aman karena data sensitif disimpan di server sehingga tidak terlihat user, dapat menyimpan data yang lebih besar, cocok untuk data sensitif, dan berfungsi sebagai memori jangka pendek karena menyimpan informasi tentang aktivitas user selama waktu session.
+Kekurangan session yaitu terbatas pada durasi session di mana data akan hilang ketika session habis serta meningkatkan beban server karena menyimpan datanya di server.
+Kelebihan cookies yaitu mengurangi beban server karena data disimpan di browser, memungkinkan data disimpan dalam jangka panjang, dan dapat digunakan untuk berbagi token sesi antar subdomain dalam satu aplikasi.
+Kekurangan cookies yaitu hanya dapat menyimpan data dalam jumlah kecil sehingga tidak cocok untuk data besar, berpotensi masalah privasi karena dapat digunakan untuk melacak user, dan rentan terhadap serangan.
+
+4. Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?
+Penggunaan cookies tidak sepenuhnya aman secara default karena terdapat risiko serangan seperti CSRF dan XSS. Django menangani hal tersebut dengan menyediakan perlindungan bawaan, seperti penandaan cookie dengan HttpOnly dan Secure, serta atribut SameSite untuk mengurangi serangan CSRF.
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+Pertama, membuat fungsi dan form registrasi dengan cara menambahkan fungsi register pada views.py yang berfungsi untuk menghasilkan form registrasi secara otomatis dan menghasilkan akun pengguna ketika data di-submit dari form. Lalu, membuat file register.html pada direktori main/templates. Kemudian, lakukan routing di urls.py.
+Kedua, membuat fungsi login dengan cara menambahkan fungsi login_user pada views.py yang berfungsi untuk mengautentikasi pengguna yang ingin login. Kemudian, membuat file login.html pada direktori main/templates. Lalu, lakukan routing di urls.py.
+Ketiga, membuat fungsi logout dengan cara menambahkan fungsi logout_user pada views.py yang berfungsi untuk melakukan mekanisme logout. Kemudian, menambahkan button logout pada main.html. Lalu, lakukan routing di urls.py.
+Keempat, merestriksi akses halaman main dan shop detail dengan cara menambahkan decorator login_required pada fungsi show_main dan show_product.
+Kelima, menambahkan last_login yang berisi timestamp terakhir kali pengguna melakukan login dengan memodifikasi fungsi login_user dan logout_user.
+Keenam, menghubungkan model Product dengan User dengan menambahkan user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) pada class Product yang berfungsi untuk menghubungkan satu product dengan satu user melalui sebuah relationship.
+Ketujuh, me-run server lalu mencoba melakukan registrasi, login dan menambahkan data.
