@@ -89,3 +89,36 @@ Keempat, merestriksi akses halaman main dan shop detail dengan cara menambahkan 
 Kelima, menambahkan last_login yang berisi timestamp terakhir kali pengguna melakukan login dengan memodifikasi fungsi login_user dan logout_user.
 Keenam, menghubungkan model Product dengan User dengan menambahkan user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) pada class Product yang berfungsi untuk menghubungkan satu product dengan satu user melalui sebuah relationship.
 Ketujuh, me-run server lalu mencoba melakukan registrasi, login dan menambahkan data.
+
+Tugas 5
+1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+1) Inline style yaitu CSS langsung di atribut elemen (<div style="color: red;">)
+2) ID selector (#idname)
+3) Class, pseudo-class, attribute selector (.classname, :hover, [type="text"])
+4) Element/tag selector (div, p, h1)
+5) Universal selector (*) dan inheritance
+
+2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
+Responsive design penting untuk aplikasi web karena memastikan pengalaman pengguna (UX) yang konsisten dan optimal di semua perangkat (mobile ataupun desktop) sehingga meningkatkan kepuasan pengguna, membantu aplikasi web lebih mudah ditemukan dan mendapatkan peringkat yang lebih tinggi di mesin pencarian seperti Google, serta menghemat waktu dan biaya pengembangan dan pemeliharaan karena hanya memerlukan satu kode dasar untuk berbagai ukuran layar.
+Contoh aplikasi yang sudah menerapkan responsive design adalah Instagram sehingga ketika dibuka di laptop tampil grid, di HP tampil feed 1 kolom.
+Contoh aplikasi yang belum menerapkan responsive design adalah website lama suatu institusi sehingga biasanya teks terlalu kecil di HP, layout melebar, tabel rusak. Hal ini dikarenakan layout fix pakai pixel absolute, bukan persentase/viewport.
+
+3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Margin adalah ruang luar antara elemen dengan elemen lain. Border adalah garis tepi kotak yang mengelilingi content dan padding. Padding adalah ruang dalam antara content dengan border.
+Untuk mengimplementasikannya, gunakan properti CSS, misalnya
+.box {
+  margin: 20px;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+Flex box dan grid layout adalah dua sistem layout CSS untuk menyusun elemen pada halaman web, di mana flex box cocok untuk tata letak satu dimensi dan mengutamakan fleksibilitas konten, sedangkan grid dirancang untuk tata letak dua dimensi dengan kontrol lebih besar untuk struktur halaman yang kompleks. Kegunaannya adalah Flexbox untuk menata komponen, sedangkan Grid untuk mengatur garis besar seluruh halaman. 
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+Pertama, menambahkan Tailwind ke aplikasi.
+Kedua, menambahkan fitur edit product pada aplikasi dengan menambahkan fungsi edit_product pada views.py dan menambah file edit_product.html. Lalu, lakukan routing pada urls.py. Tambahkan juga tombol edit pada main.html.
+Ketiga, menambahkan fitur hapus product pada aplikasi dengan menambahkan fungsi delete_product pada views.py. Lalu, routing pada urls.py. Tambahkan juga tombol delete pada main.html.
+Keempat, menambahkan navigation bar pada aplikasi dengan membuat file navbar.html. Lalu tautkan navbar ke dalam main.html.
+Kelima, konfigurasi static files pada aplikasi dengan menambahkan middleware WhiteNoise pada settings.py.
+Keenam, lakukan styling pada aplikasi dengan tailwind dan external CSS. Caranya yaitu dengan menambahkan global.css lalu hubungkan global.css dan script tailwind ke base.html. Setelah itu, tambahkan custom styling ke global.css. Kemudian, lakukan styling navbar pada navbar.html, styling halaman login pada login.html, styling halaman register pada register.html, styling halaman home pada card_product.html, styling halaman detail product pada product_detail.html, styling halaman create product pada create_product.html, dan styling halaman edit product pada edit_product.html.

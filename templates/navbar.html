@@ -1,0 +1,89 @@
+<nav class="fixed top-0 left-0 w-full bg-gradient-to-r from-green-500 to-blue-600 shadow-md z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <h1 class="text-xl font-bold text-white tracking-wide">
+          ⚽ Football <span class="text-yellow-300">Shop</span>
+        </h1>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a href="/" class="relative text-white font-medium transition duration-300 hover:text-yellow-300 after:block after:h-0.5 after:bg-yellow-300 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+          Home
+        </a>
+        <a href="{% url 'main:create_product' %}" class="relative text-white font-medium transition duration-300 hover:text-yellow-300 after:block after:h-0.5 after:bg-yellow-300 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left">
+          Create Product
+        </a>
+      </div>
+
+      <!-- Desktop User Section -->
+      <div class="hidden md:flex items-center space-x-6">
+        {% if user.is_authenticated %}
+          <div class="text-right text-white">
+            <div class="text-sm font-semibold">{{ name|default:user.username }}</div>
+            <div class="text-xs opacity-90">{{ npm|default:"Student" }} - {{ class|default:"Class" }}</div>
+          </div>
+          <a href="{% url 'main:logout' %}" class="text-yellow-300 hover:text-white font-medium transition-colors">
+            Logout
+          </a>
+        {% else %}
+          <a href="{% url 'main:login' %}" class="text-white hover:text-yellow-300 font-medium transition-colors">
+            Login
+          </a>
+          <a href="{% url 'main:register' %}" class="bg-yellow-300 hover:bg-yellow-400 text-gray-900 px-4 py-2 rounded font-semibold transition-colors">
+            Register
+          </a>
+        {% endif %}
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center">
+        <button class="mobile-menu-button p-2 text-white hover:text-yellow-300 transition-colors">
+          <span class="sr-only">Open menu</span>
+          <div class="w-6 h-6 flex flex-col justify-center items-center space-y-1">
+            <span class="bg-current block h-0.5 w-6 rounded-sm"></span>
+            <span class="bg-current block h-0.5 w-6 rounded-sm"></span>
+            <span class="bg-current block h-0.5 w-6 rounded-sm"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu hidden md:hidden bg-gray-50 border-t border-gray-200">
+    <div class="px-6 py-4 space-y-4">
+      <!-- Mobile Navigation Links -->
+      <div class="space-y-1">
+        <a href="/" class="block text-gray-700 hover:text-blue-600 font-medium py-2 transition-colors">Home</a>
+        <a href="{% url 'main:create_product' %}" class="block text-gray-700 hover:text-blue-600 font-medium py-2 transition-colors">Create Product</a>
+      </div>
+
+      <!-- Mobile User Section -->
+      <div class="border-t border-gray-200 pt-4">
+        {% if user.is_authenticated %}
+          <div class="mb-3">
+            <div class="font-semibold text-gray-900">{{ name|default:user.username }}</div>
+            <div class="text-sm text-gray-500">{{ npm|default:"Student" }} - {{ class|default:"Class" }}</div>
+          </div>
+          <a href="{% url 'main:logout' %}" class="block text-red-600 hover:text-red-700 font-medium py-2 transition-colors">Logout</a>
+        {% else %}
+          <div class="space-y-3">
+            <a href="{% url 'main:login' %}" class="block text-gray-700 hover:text-blue-600 font-medium py-2 transition-colors">Login</a>
+            <a href="{% url 'main:register' %}" class="block bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-semibold py-2 px-4 rounded text-center transition-colors">Register</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const btn = document.querySelector("button.mobile-menu-button");
+    const menu = document.querySelector(".mobile-menu");
+    btn.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+  </script>
+</nav>
