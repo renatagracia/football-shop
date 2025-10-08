@@ -15,31 +15,13 @@
       </div>
 
       <!-- Form Errors Display -->
-      {% if form.non_field_errors %}
-        <div class="mb-6">
-          {% for error in form.non_field_errors %}
-            <div class="px-4 py-3 rounded text-sm border bg-red-50 border-red-200 text-red-700">
-              {{ error }}
-            </div>
-          {% endfor %}
+      <div id="form-errors" class="mb-6 hidden">
+        <div id="error-messages">
+          <!-- Error messages will be inserted here -->
         </div>
-      {% endif %}
+      </div>
 
-      {% if form.errors %}
-        <div class="mb-6">
-          {% for field, errors in form.errors.items %}
-            {% if field != '__all__' %}
-              {% for error in errors %}
-                <div class="px-4 py-3 rounded text-sm border bg-red-50 border-red-200 text-red-700 mb-2">
-                  <strong>{{ field|title }}:</strong> {{ error }}
-                </div>
-              {% endfor %}
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      <form method="POST" action="" class="space-y-5">
+      <form id="registerForm" method="POST" class="space-y-5">
         {% csrf_token %}
         
         <div>
@@ -77,31 +59,15 @@
 
         <button 
           type="submit" 
-          class="w-full bg-blue-600 text-white font-medium py-3 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200">
-          Create Account
+          id="submit-btn"
+          class="w-full bg-blue-600 text-white font-medium py-3 px-4 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 flex items-center justify-center">
+          <span id="btn-text">Create Account</span>
+          <svg id="loading-spinner" class="hidden w-5 h-5 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
         </button>
       </form>
-
-      <!-- Messages Display -->
-      {% if messages %}
-        <div class="mt-6">
-          {% for message in messages %}
-            <div 
-              class="
-                px-4 py-3 rounded text-sm border
-                {% if message.tags == 'success' %}
-                  bg-blue-50 border-blue-200 text-blue-700
-                {% elif message.tags == 'error' %}
-                  bg-red-50 border-red-200 text-red-700
-                {% else %}
-                  bg-gray-50 border-gray-200 text-gray-700
-                {% endif %}
-              ">
-              {{ message }}
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
 
       <div class="mt-6 text-center">
         <p class="text-gray-500 text-sm">
@@ -115,4 +81,113 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const registerForm = document.getElementById('registerForm');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const formErrors = document.getElementById('form-errors');
+    const errorMessages = document.getElementById('error-messages');
+
+    function showLoading() {
+        btnText.classList.add('hidden');
+        loadingSpinner.classList.remove('hidden');
+        submitBtn.disabled = true;
+    }
+
+    function hideLoading() {
+        btnText.classList.remove('hidden');
+        loadingSpinner.classList.add('hidden');
+        submitBtn.disabled = false;
+    }
+
+    function showErrors(errors) {
+        errorMessages.innerHTML = '';
+        
+        Object.values(errors).forEach(fieldErrors => {
+            fieldErrors.forEach(error => {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'px-4 py-3 rounded text-sm border bg-red-50 border-red-200 text-red-700 mb-2';
+                errorDiv.textContent = error;
+                errorMessages.appendChild(errorDiv);
+            });
+        });
+        
+        formErrors.classList.remove('hidden');
+    }
+
+    function hideErrors() {
+        formErrors.classList.add('hidden');
+    }
+
+    registerForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value;
+        const password1 = document.getElementById('password1').value;
+        const password2 = document.getElementById('password2').value;
+        
+        // Basic validation
+        if (!username || !password1 || !password2) {
+            showErrors({__all__: ['Please fill in all fields']});
+            return;
+        }
+
+        if (password1 !== password2) {
+            showErrors({password2: ['Passwords do not match']});
+            return;
+        }
+
+        hideErrors();
+        showLoading();
+
+        try {
+            const response = await fetch('{% url "main:register" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password1: password1,
+                    password2: password2
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showToast('Success!', data.message, 'success');
+                
+                // Redirect to login page after a short delay
+                setTimeout(() => {
+                    window.location.href = '{% url "main:login" %}';
+                }, 1500);
+            } else {
+                if (data.errors) {
+                    showErrors(data.errors);
+                } else {
+                    showErrors({__all__: [data.error || 'Registration failed. Please try again.']});
+                }
+                hideLoading();
+            }
+
+        } catch (error) {
+            console.error('Registration error:', error);
+            showErrors({__all__: ['Network error. Please try again.']});
+            hideLoading();
+        }
+    });
+
+    // Clear errors when user starts typing
+    const inputs = registerForm.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('input', hideErrors);
+    });
+});
+</script>
 {% endblock content %}

@@ -1,4 +1,4 @@
-Tugas 2
+# Tugas 2
 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 Pertama, membuat sebuah proyek Django baru dengan menjalankan perintah django-admin startproject football_shop . lalu menjalankan server.
 Kedua, membuat aplikasi dengan nama main pada proyek tersebut dengan menjalankan perintah python manage.py startapp main. Direktori main akan berisi struktur awal untuk aplikasi Django. Lalu, mendaftarkan aplikasi main ke dalam proyek dengan cara menambahkan 'main' pada INSTALLED_APPS.
@@ -30,7 +30,7 @@ Karena Django memiliki struktur yang jelas, memiliki banyak fitur bawaan yang su
 6. Apakah ada feedback untuk asisten dosen tutorial 1 yang telah kamu kerjakan sebelumnya?
 Tidak ada
 
-Tugas 3
+# Tugas 3
 1. Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 Data delivery diperlukan dalam pengimplementasian sebuah platform untuk memindahkan dan mendistribusikan data secara efisien, serta memungkinkan analisis data yang akurat sebab dalam mengembangkan suatu platform, ada saat di mana kita perlu mengirimkan data dari satu stack ke stack lainnya.
 
@@ -61,7 +61,7 @@ Screenshot Postman:
 ![bentuk XML berdasarkan ID](images/show_xml_by_id.png)
 ![bentuk JSON berdasarkan ID](images/show_json_by_id.png)
 
-Tugas 4
+# Tugas 4
 1. Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
 Django AuthenticationForm adalah form bawaan dari framework Django yang digunakan untuk proses login user dengan memastikan bahwa username dan password yang dimasukkan sesuai dengan data yang tersimpan di database.
 Kelebihannya adalah memiliki fitur autentikasi lengkap, dirancang dengan fitur keamanan yang kuat, dapat disesuaikan untuk kebutuhan spesifik proyek, dan menyediakan kerangka kerja yang sudah siap pakai untuk menangani proses login dan register.
@@ -90,7 +90,7 @@ Kelima, menambahkan last_login yang berisi timestamp terakhir kali pengguna mela
 Keenam, menghubungkan model Product dengan User dengan menambahkan user = models.ForeignKey(User, on_delete=models.CASCADE, null=True) pada class Product yang berfungsi untuk menghubungkan satu product dengan satu user melalui sebuah relationship.
 Ketujuh, me-run server lalu mencoba melakukan registrasi, login dan menambahkan data.
 
-Tugas 5
+# Tugas 5
 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
 1) Inline style yaitu CSS langsung di atribut elemen (<div style="color: red;">)
 2) ID selector (#idname)
@@ -122,3 +122,19 @@ Ketiga, menambahkan fitur hapus product pada aplikasi dengan menambahkan fungsi 
 Keempat, menambahkan navigation bar pada aplikasi dengan membuat file navbar.html. Lalu tautkan navbar ke dalam main.html.
 Kelima, konfigurasi static files pada aplikasi dengan menambahkan middleware WhiteNoise pada settings.py.
 Keenam, lakukan styling pada aplikasi dengan tailwind dan external CSS. Caranya yaitu dengan menambahkan global.css lalu hubungkan global.css dan script tailwind ke base.html. Setelah itu, tambahkan custom styling ke global.css. Kemudian, lakukan styling navbar pada navbar.html, styling halaman login pada login.html, styling halaman register pada register.html, styling halaman home pada card_product.html, styling halaman detail product pada product_detail.html, styling halaman create product pada create_product.html, dan styling halaman edit product pada edit_product.html.
+
+# Tugas 6
+1. Apa perbedaan antara synchronous request dan asynchronous request?
+Pada synchronous request, ketika sebuah permintaan dikirim, program akan berhenti (memblokir) dan menunggu hingga permintaan tersebut selesai serta respons diterima dari server. Sementara pada asynchronous request, ketika permintaan dikirim, program tidak menunggu respons, melainkan program melanjutkan eksekusi tugas lain secara bersamaan, dan hanya akan memproses respons server saat sudah tersedia.
+
+2. Bagaimana AJAX bekerja di Django (alur request–response)?
+Client memberi asynchronous request ke server dengan melakukan suatu aksi di halaman web, lalu fungsi view di Django memproses permintaan dan mengembalikan respons (seringkali dalam format JSON) tanpa memuat ulang seluruh halaman, dan JavaScript kemudian menggunakan data respons untuk memperbarui bagian tertentu dari halaman web tersebut. 
+
+3. Apa keuntungan menggunakan AJAX dibandingkan render biasa di Django?
+Peningkatan pengalaman pengguna (UX) karena pembaruan bagian-bagian halaman tanpa memuat ulang seluruh halaman, peningkatan kinerja aplikasi dengan mengurangi lalu lintas server dan latensi jaringan, serta kemampuan untuk membuat aplikasi lebih interaktif dan dinamis, seperti validasi formulir secara real-time. 
+
+4. Bagaimana cara memastikan keamanan saat menggunakan AJAX untuk fitur Login dan Register di Django?
+Selalu aktifkan perlindungan CSRF dengan mengirimkan token CSRF dalam header X-CSRFToken atau menggunakan ensure_csrf_cookie(). Selain itu, gunakan HTTPS untuk melindungi token dari serangan man-in-the-middle, validasi input pengguna dengan hati-hati, terapkan pembatasan percobaan login (rate limiting) untuk mencegah serangan brute-force, dan perbarui Django serta dependensinya secara berkala untuk mendapatkan perbaikan keamanan terbaru. 
+
+5. Bagaimana AJAX mempengaruhi pengalaman pengguna (User Experience) pada website?
+AJAX meningkatkan user experience dengan menciptakan halaman web yang lebih responsif dan interaktif karena memungkinkan pembaruan data di latar belakang tanpa me-reload seluruh halaman, memberikan pengalaman yang mulus seperti aplikasi desktop, memungkinkan validasi formulir saat mengetik, dan mendukung fitur seperti scroll tak terbatas dan pembaruan konten real-time.
